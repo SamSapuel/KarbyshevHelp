@@ -1,0 +1,11 @@
+server:
+  port: 25585
+spring:
+  data:
+    mongodb:
+      uri: mongodb://rootuser:rootpass@localhost:27017
+      #username: rootuser
+      #password: rootpass
+      database: tasks
+  kafka:
+    bootstrap-servers: localhost:9092
