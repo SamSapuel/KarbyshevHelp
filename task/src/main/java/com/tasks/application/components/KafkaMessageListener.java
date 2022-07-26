@@ -13,6 +13,7 @@ public class KafkaMessageListener {
             groupId = "groupId"
     )
     String listener(String data) {
+        System.out.println("data: " + data);
         return data;
     }
 }
