@@ -1,19 +1,57 @@
 package com.tasks.application.components;
 
+import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
-public class KafkaMessageListener {
+@AllArgsConstructor
+public class KafkaMessageListener implements Runnable {
 
     // Default listener method
 
+    final String separator = ":";
+    final TaskController taskController;
+    List<String> args = null;
+
+    /**
+     * Listener accepts command from message broker
+     * and parses it into a List and calls run() method
+     * so command could be handled in separate thread
+     * **/
     @KafkaListener(
             topics = "tasks",
             groupId = "groupId"
     )
     String listener(String data) {
-        System.out.println("data: " + data);
+        System.out.println("received data: " + data);
+        args = Arrays.asList(data.split(separator));
         return data;
+    }
+
+    /**
+     * The code below runs in a separated thread
+     * basically handling commands in concurrent thread
+     * **/
+
+    // TODO: limit number of possible threads by 2 or 3
+
+    @Override
+    public void run() {
+        String command = args.get(0);
+
+        List<String> props = args.stream()
+                .skip(1)
+                .toList();
+
+        switch (command) {
+            case "new-task":
+                taskController.createTask(props);
+
+                break;
+        }
     }
 }

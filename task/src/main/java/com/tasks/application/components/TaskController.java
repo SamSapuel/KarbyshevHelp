@@ -1,11 +1,12 @@
 package com.tasks.application.components;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@RestController
-@RequestMapping("api/v1/tasks")
+import java.util.List;
+
+@Component
+@AllArgsConstructor
 public class TaskController {
 
     // TODO: Implement methods for creating, updating, completing tasks
@@ -14,8 +15,7 @@ public class TaskController {
     // TODO: Test implemented methods
     // TODO: Configure Apache207 Kafka :)
 
-    @PostMapping("new-task")
-    private void createTask(String[] args) {
+    String createTask(List<String> props) {
         /**
          *
          *  Думаю, что нужно сделать что-то типа структуры, в которую
@@ -23,6 +23,12 @@ public class TaskController {
          *  структуру передавать в метод
          *
          * **/
-        taskService.addTask(args[0], args[1], args[2]);
+        try {
+            // TODO: implement properties parsing and sending response using Kafka
+            taskService.addTask();
+            return "task-create:Ok";
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }
