@@ -13,10 +13,10 @@ public class UsersApplication {
         SpringApplication.run(UsersApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
-        return args -> {
-            kafkaTemplate.send("users", "user 1 was created");
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
+//        return args -> {
+//            kafkaTemplate.send("users", "user 1 was created");
+//        };
+//    }
 }

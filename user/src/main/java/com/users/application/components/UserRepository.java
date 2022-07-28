@@ -1,4 +1,4 @@
-package com.users.application;
+package com.users.application.components;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

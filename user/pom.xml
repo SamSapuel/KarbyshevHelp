@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.users</groupId>
     <artifactId>user</artifactId>
 
     <properties>
