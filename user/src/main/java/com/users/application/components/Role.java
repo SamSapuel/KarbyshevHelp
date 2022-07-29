@@ -1,6 +1,9 @@
 package com.users.application.components;
 
 public enum Role {
-    DEFAULT,
-    ADMIN
+    DEFAULT("default"),
+    ADMIN("admin");
+
+    Role(String value) {
+    }
 }

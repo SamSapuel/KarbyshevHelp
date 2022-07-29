@@ -22,7 +22,8 @@ public class User {
                 String secondName,
                 String email,
                 Role role,
-                Address address,
+                String city,
+                String street,
                 LocalDateTime created) {
         this.firstName = firstName;
         this.secondName = secondName;
