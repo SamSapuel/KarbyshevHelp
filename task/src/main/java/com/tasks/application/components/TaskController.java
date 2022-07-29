@@ -15,7 +15,7 @@ public class TaskController {
     // TODO: Test implemented methods
     // TODO: Configure Apache207 Kafka :)
 
-    String createTask(List<String> props) {
+    public String createTask(List<String> props) {
         /**
          *
          *  Думаю, что нужно сделать что-то типа структуры, в которую
@@ -25,7 +25,7 @@ public class TaskController {
          * **/
         try {
             // TODO: implement properties parsing and sending response using Kafka
-            taskService.addTask();
+            taskService.addTask(props);
             return "task-create:Ok";
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

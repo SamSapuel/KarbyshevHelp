@@ -44,7 +44,7 @@ public class KafkaMessageListener implements Runnable {
         String command = args.get(0);
 
         List<String> props = args.stream()
-                .skip(1)
+                .skip(0)
                 .toList();
 
         switch (command) {
