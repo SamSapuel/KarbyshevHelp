@@ -13,4 +13,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserByEmail(String email) { return userRepository.findUserByEmail(email); }
+
+    public User createNewUser() {
+
+    }
+
+
 }
