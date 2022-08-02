@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class KafkaMessageListener implements Runnable {
+public class KafkaMessageListener { // Should implement Runnable interface (or shouldn't?)
 
     // Default listener method
 
@@ -29,6 +29,9 @@ public class KafkaMessageListener implements Runnable {
     String listener(String data) {
         System.out.println("received data: " + data);
         args = Arrays.asList(data.split(separator));
+
+        // calling command executers down below?
+
         return data;
     }
 
@@ -39,6 +42,7 @@ public class KafkaMessageListener implements Runnable {
 
     // TODO: limit number of possible threads by 2 or 3
 
+    /**
     @Override
     public void run() {
         String command = args.get(0);
@@ -54,4 +58,5 @@ public class KafkaMessageListener implements Runnable {
                 break;
         }
     }
+    **/
 }
