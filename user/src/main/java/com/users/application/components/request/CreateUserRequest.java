@@ -9,13 +9,13 @@ import com.users.application.components.Role;
         "firstName",
         "secondName",
         "email",
-        "role",
-        "address"
+        "city",
+        "street"
 })
 public class CreateUserRequest {
     public String firstName;
     public String secondName;
     public String email;
-    public Role role;
-    public AddressRequest address;
+    public String city;
+    public String street;
 }

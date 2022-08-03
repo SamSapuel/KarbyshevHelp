@@ -1,7 +1,7 @@
 package com.users.application.components;
 
 import com.users.application.components.request.CreateUserRequest;
-import com.users.application.components.validate.UserValidate;
+import com.users.application.components.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    //private final CreateUserRequest createUserRequest;
-    private final UserValidate userValidate;
+
     @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -23,20 +22,31 @@ public class UserService {
     public User getUserByEmail(String email) { return userRepository.findUserByEmail(email); }
     @Transactional
     public User createNewUser(CreateUserRequest createUserRequest) {
-        userValidate.validateOnCreate(createUserRequest.email);
         return userRepository.insert(new User(
                 createUserRequest.firstName,
                 createUserRequest.secondName,
                 createUserRequest.email,
-                createUserRequest.role,
-                createUserRequest.address.city,
-                createUserRequest.address.street,
+                Role.DEFAULT,
+                new Address(createUserRequest.city,
+                        createUserRequest.street),
                 LocalDateTime.now()
         ));
     }
 
-//    @Transactional
-//    public User updateUserRole() {
-//
-//    }
+    @Transactional
+    public User updateUserRole(String email, UpdateUserRequest request) {
+        User user = userRepository.findUserByEmail(email);
+        user.setRole(request.role);
+        return user;
+    }
+
+    @Transactional
+    public void deleteUser(String email) throws Exception {
+        if (userRepository.findUserByEmail(email) == null) {
+            throw new Exception("User already deleted");
+        } else {
+            userRepository.delete(userRepository.findUserByEmail(email));
+        }
+    }
+
 }
