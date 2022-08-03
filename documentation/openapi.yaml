@@ -1,0 +1,63 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.1"
+  title: KarbyshevHelp API
+  description: Multi-file boilerplate for OpenAPI Specification.
+  license:
+    name: MIT
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com
+servers:
+  - url: http://api.karbyshevhelp.com
+
+tags:
+  - name: Users
+    description: User Controller
+
+  - name: Task
+    description: Task Controller
+
+  #  - name: competitions-member-controller
+  #    description: Competitions Member Controller
+
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: "Lists of all users"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenResponse"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFoundResponse"
