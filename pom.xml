@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>user</module>
+        <module>task</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
