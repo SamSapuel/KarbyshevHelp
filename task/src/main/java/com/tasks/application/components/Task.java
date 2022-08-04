@@ -1,11 +1,15 @@
 package com.tasks.application.components;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+@Data
+@Document
 @Getter
 @Setter
 public class Task {
@@ -21,11 +25,10 @@ public class Task {
     private LocalDateTime completedAt;
 
     public Task(String label,
-                String createdBy,
-                String assignedTo) {
+                String createdBy) {
         this.label = label;
         this.createdBy = createdBy;
-        this.assignedTo = assignedTo;
+        this.assignedTo = null;
         this.isCompleted = false;
         this.createdAt = LocalDateTime.now();
         this.completedAt = null;

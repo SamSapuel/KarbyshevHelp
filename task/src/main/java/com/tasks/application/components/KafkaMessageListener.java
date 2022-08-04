@@ -1,6 +1,7 @@
 package com.tasks.application.components;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,9 @@ public class KafkaMessageListener { // Should implement Runnable interface (or s
     // Default listener method
 
     final String separator = ":";
-    final TaskController taskController;
+    private final TaskController taskController;
+    @Autowired
+    private final TaskService taskService;
     List<String> args = null;
 
     /**
@@ -22,17 +25,30 @@ public class KafkaMessageListener { // Should implement Runnable interface (or s
      * and parses it into a List and calls run() method
      * so command could be handled in separate thread
      * **/
-    @KafkaListener(
-            topics = "tasks",
-            groupId = "groupId"
-    )
-    String listener(String data) {
+//    @KafkaListener(
+//            topics = "tasks",
+//            groupId = "groupId"
+//    )
+//    String listener(String data) {
+//        System.out.println("received data: " + data);
+//        args = Arrays.asList(data.split(separator));
+//
+//        // calling command executers down below?
+//
+//        return data;
+//    }
+    @KafkaListener(topics = "tasks", groupId = "groupId")
+    void listener(String data) {
         System.out.println("received data: " + data);
-        args = Arrays.asList(data.split(separator));
 
-        // calling command executers down below?
+        // !!!  taskService.assignUserToTask();
 
-        return data;
+        String[] args = data.split(":");
+
+        switch (args[1]) {
+            case "assignUserToTask":
+                taskService.assignUserToTask(args[2], args[0]);
+        }
     }
 
     /**
