@@ -2,13 +2,9 @@ package com.tasks.application.components;
 
 import com.tasks.application.components.request.CreateTaskRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -17,7 +13,6 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    private KafkaTemplate<String, String> kafkaTemplate;
 
 //    @Transactional
 //    public String addTask(List<String> props) {
@@ -37,21 +32,15 @@ public class TaskService {
 //    }
 
     @Transactional
-    public void createTask(CreateTaskRequest request) {
-        Task task = new Task(request.label,
-                request.createdBy);
-        taskRepository.save(task);
-        kafkaTemplate.send("users", "getUserByEmail:"
-                + request.assignedTo
-                + ":assignUserToTask"
-                + ":" + request.label);
+    public Task createTask(CreateTaskRequest request) {
+        Task task = new Task(request.label, request.createdBy);
+        return taskRepository.save(task);
     }
 
     @Transactional
     public Task assignUserToTask(String label, String email) {
         Task task = taskRepository.findByLabel(label);
         task.setAssignedTo(email);
-
         return taskRepository.save(task);
     }
 

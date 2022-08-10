@@ -2,13 +2,12 @@ package com.users.application.components;
 
 import com.users.application.components.request.CreateUserRequest;
 import com.users.application.components.request.UpdateUserRequest;
+import com.users.application.components.response.UserResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -23,28 +22,30 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/findUser")
-    public User getUserByEmail(@RequestBody String email) {
+    @GetMapping("/findUser/{email}")
+    public User getUserByEmail(@PathVariable String email) throws Exception {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity<Void> createUser(@RequestBody CreateUserRequest request) throws Exception {
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest request) throws Exception {
         if (userService.getUserByEmail(request.email) != null) throw new Exception("User already exists");
-        userService.createNewUser(request);
+        User user  = userService.createNewUser(request);
         kafkaTemplate.send("users", "user: '" + request.email + "' was created");
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping("/updateUser/{email}")
-    public ResponseEntity<Void> updateUserRole(@PathVariable String email, @RequestBody UpdateUserRequest request) {
-        userService.updateUserRole(email, request);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    public ResponseEntity<User> updateUserRole(@PathVariable String email, @RequestBody UpdateUserRequest request) throws Exception {
+        User user = userService.updateUserRole(email, request);
+        kafkaTemplate.send("users", "user: '" + email + "' was updated");
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteUser/{email}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String email) throws Exception {
+    public ResponseEntity<Void> deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
+        kafkaTemplate.send("users", "user: '" + email + "' was deleted");
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
