@@ -1,13 +1,9 @@
 package com.users.application.components;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 @Component
 @AllArgsConstructor
@@ -28,11 +24,11 @@ public class KafkaMessageListener {
          * 3 index - source object
          */
         String[] args = data.split(":");
-        switch (args[0]) {
-            case "getUserByEmail":
-                if (userService.getUserByEmail(args[1]) != null) kafkaTemplate.send(
-                                                "tasks",
-                                                args[1] + ":" + args[2] + ":" + args[3]);
-        }
+//        switch (args[0]) {
+//            case "getUserByEmail":
+//                if (userService.getUserByEmail(args[1]) != null) kafkaTemplate.send(
+//                                                "tasks",
+//                                                args[1] + ":" + args[2] + ":" + args[3]);
+//        }
     }
 }

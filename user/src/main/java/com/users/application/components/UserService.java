@@ -1,8 +1,10 @@
 package com.users.application.components;
 
+import com.users.application.components.exception.NotFoundException;
 import com.users.application.components.request.CreateUserRequest;
 import com.users.application.components.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,9 @@ public class UserService {
         return userRepository.findAll();
     }
     @Transactional
-    public User getUserByEmail(String email) { return userRepository.findUserByEmail(email); }
+    public User getUserByEmail(String email) throws Exception {
+        return userRepository.findUserByEmail(email).orElseThrow(Exception::new);
+    }
     @Transactional
     public User createNewUser(CreateUserRequest createUserRequest) {
         return userRepository.insert(new User(
@@ -34,18 +38,18 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUserRole(String email, UpdateUserRequest request) {
-        User user = userRepository.findUserByEmail(email);
+    public User updateUserRole(String email, UpdateUserRequest request) throws Exception {
+        User user = userRepository.findUserByEmail(email).orElseThrow(Exception::new);
         user.setRole(request.role);
-        return user;
+        return userRepository.save(user);
     }
 
     @Transactional
-    public void deleteUser(String email) throws Exception {
-        if (userRepository.findUserByEmail(email) == null) {
-            throw new Exception("User already deleted");
+    public void deleteUser(String email) {
+        if (userRepository.findUserByEmail(email).isEmpty()) {
+            throw NotFoundException.create("user", email);
         } else {
-            userRepository.delete(userRepository.findUserByEmail(email));
+            userRepository.delete(userRepository.findUserByEmail(email).get());
         }
     }
 
