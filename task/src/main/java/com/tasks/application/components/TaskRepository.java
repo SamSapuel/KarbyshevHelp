@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface TaskRepository extends MongoRepository<Task, String> {
 
-    public Optional<Task> findByLabel(String label);
+    Task findByLabel(String label);
 
     public Optional<List<Task>> findByAssignedTo(String assignedTo);
 }

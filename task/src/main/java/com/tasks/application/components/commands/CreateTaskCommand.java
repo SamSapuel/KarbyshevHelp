@@ -22,7 +22,7 @@ public class CreateTaskCommand implements CommandInterface{
             throw new RuntimeException("no assigned receivers");
         }
         try {
-            receiver.createTask(props);
+            //receiver.createTask(props);
         } catch (Exception e) {
             throw new RuntimeException("failed to execute command");
         }
