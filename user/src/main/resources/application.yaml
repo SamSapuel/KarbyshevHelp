@@ -9,4 +9,9 @@ spring:
       database: users
   kafka:
     bootstrap-servers: localhost:9092
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/My-Realm/protocol/openid-connect/certs
 

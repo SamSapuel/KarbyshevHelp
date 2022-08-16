@@ -1,0 +1,30 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://localhost:8080/auth/realms/KarbyshevHelp-Realm
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: spring-gateway-application
+            client-secret: 05c063d6-621e-4628-bb17-d6a4560df69a
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: product-resource-server
+          uri: http://localhost:9191
+          predicates:
+            - Path=/users/**
+server:
+  port: 9090
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
