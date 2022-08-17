@@ -17,15 +17,18 @@ public class User {
     private Role role;
     private Address address;
     private LocalDateTime created;
+    private String password;
 
     public User(String firstName,
                 String secondName,
                 String email,
+                String password,
                 Role role,
                 Address address,
                 LocalDateTime created) {
         this.firstName = firstName;
         this.secondName = secondName;
+        this.password = password;
         this.email = email;
         this.role = role;
         this.address = address;

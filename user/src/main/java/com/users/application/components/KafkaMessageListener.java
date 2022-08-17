@@ -2,15 +2,11 @@ package com.users.application.components;
 
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class KafkaMessageListener {
-
-    private final UserService userService;
-    private KafkaTemplate<String, String> kafkaTemplate;
 
     @KafkaListener(topics = "users", groupId = "groupId")
     void listener(String data) {

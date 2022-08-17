@@ -32,8 +32,8 @@ public class TaskService {
 //    }
 
     @Transactional
-    public Task createTask(CreateTaskRequest request) {
-        Task task = new Task(request.label, request.createdBy);
+    public Task createTask(CreateTaskRequest request, String createdBy) {
+        Task task = new Task(request.label, createdBy);
         return taskRepository.save(task);
     }
 
