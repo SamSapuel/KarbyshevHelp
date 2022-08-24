@@ -4,7 +4,7 @@ import com.users.application.components.exception.NotFoundException;
 import com.users.application.components.request.CreateUserRequest;
 import com.users.application.components.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +16,15 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
     @Transactional
-    public User getUserByEmail(String email) throws Exception {
-        return userRepository.findUserByEmail(email).orElseThrow(Exception::new);
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElse(null);
     }
     @Transactional
     public User createNewUser(CreateUserRequest createUserRequest) {
@@ -30,6 +32,7 @@ public class UserService {
                 createUserRequest.firstName,
                 createUserRequest.secondName,
                 createUserRequest.email,
+                passwordEncoder.encode(createUserRequest.password),
                 Role.DEFAULT,
                 new Address(createUserRequest.city,
                         createUserRequest.street),
