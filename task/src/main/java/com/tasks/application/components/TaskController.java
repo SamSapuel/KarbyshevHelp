@@ -1,6 +1,9 @@
 package com.tasks.application.components;
 
+import com.tasks.application.components.request.AssignUserToTaskRequest;
+import com.tasks.application.components.request.CompleteTaskRequest;
 import com.tasks.application.components.request.CreateTaskRequest;
+import com.tasks.application.components.request.DeleteTaskRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,28 +21,32 @@ public class TaskController {
     private final TaskService taskService;
 
     // TODO: Test implemented methods
-    // TODO: Configure Apache207 Kafka :)
-
-//    public String createTask(List<String> props) {
-//        /**
-//         *
-//         *  Думаю, что нужно сделать что-то типа структуры, в которую
-//         *  будут попадать параметры для создания таска, а потом эту
-//         *  структуру передавать в метод
-//         *
-//         * **/
-//        try {
-//            // TODO: implement properties parsing and sending response using Kafka
-//            taskService.addTask(props);
-//            return "task-create:Ok";
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException(e);
-//        }
-//    }
     @PostMapping("/createTask")
     public ResponseEntity<Void> createTask(@RequestBody CreateTaskRequest request) {
         taskService.createTask(request);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
+    @GetMapping("/getTasks")
+    public ResponseEntity<List<Task>> getTasks() {
+        return new ResponseEntity<>(taskService.getTasks(), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/completeTask")
+    public ResponseEntity<Void> completeTask(@RequestBody CompleteTaskRequest request) {
+        taskService.completeTask(request);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PostMapping("/assignTo")
+    public ResponseEntity<Void> assignTo(@RequestBody AssignUserToTaskRequest request) {
+        taskService.assignUserToTask(request);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<Void> deleteTask(@RequestBody DeleteTaskRequest request) {
+        taskService.deleteTask(request);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

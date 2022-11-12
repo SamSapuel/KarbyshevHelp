@@ -37,19 +37,7 @@ public class KafkaMessageListener { // Should implement Runnable interface (or s
 //
 //        return data;
 //    }
-    @KafkaListener(topics = "tasks", groupId = "groupId")
-    void listener(String data) {
-        System.out.println("received data: " + data);
 
-        // !!!  taskService.assignUserToTask();
-
-        String[] args = data.split(":");
-
-        switch (args[1]) {
-            case "assignUserToTask":
-                taskService.assignUserToTask(args[2], args[0]);
-        }
-    }
 
     /**
      * The code below runs in a separated thread
