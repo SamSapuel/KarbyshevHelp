@@ -10,4 +10,6 @@ public interface TaskRepository extends MongoRepository<Task, String> {
     Task findByLabel(String label);
 
     public Optional<List<Task>> findByAssignedTo(String assignedTo);
+
+    void delete(String label);
 }

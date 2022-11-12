@@ -1,6 +1,8 @@
 package com.tasks.application.components;
 
+import com.tasks.application.components.request.CompleteTaskRequest;
 import com.tasks.application.components.request.CreateTaskRequest;
+import com.tasks.application.components.request.DeleteTaskRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,18 @@ public class TaskService {
         Task task = taskRepository.findByLabel(label);
         task.setAssignedTo(email);
         return taskRepository.save(task);
+    }
+
+    @Transactional
+    public void completeTask(CompleteTaskRequest request) {
+        Task task = taskRepository.findByLabel(request.label);
+        task.setCompleted(true);
+        taskRepository.save(task);
+    }
+
+    @Transactional
+    public void deleteTask(DeleteTaskRequest request) {
+        taskRepository.delete(request.label);
     }
 
 //    @Transactional
