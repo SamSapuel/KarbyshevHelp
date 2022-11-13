@@ -39,9 +39,9 @@ public class Task {
         this.completedAt = null;
     }
 
-    public Task(String label,
-                String createdBy,
-                String assignedTo) {
-        this(label, createdBy, assignedTo, null);
-    }
+//    public Task(String label,
+//                String createdBy,
+//                String assignedTo) {
+//        this(label, createdBy, assignedTo, null);
+//    }
 }

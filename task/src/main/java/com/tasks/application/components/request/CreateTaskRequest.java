@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({
         "label",
-        "assignedTo"
+        "assignedTo",
+        "tag"
 })
 public class CreateTaskRequest {
     public String label;
 
     public String assignedTo;
+
+    public String tag;
 }
