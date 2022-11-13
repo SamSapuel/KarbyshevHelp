@@ -8,6 +8,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -34,8 +38,22 @@ public class TaskService {
 //    }
 
     @Transactional
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
+
+    @Transactional
+    public List<Task> getAllTasksByTag(String tag) {
+        Optional<List<Task>> data = taskRepository.findAllByTag(tag);
+        if (data.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return data.get();
+    }
+
+    @Transactional
     public Task createTask(CreateTaskRequest request, String createdBy) {
-        Task task = new Task(request.label, createdBy);
+        Task task = new Task(request.label, createdBy, request.assignedTo);
         return taskRepository.save(task);
     }
 
