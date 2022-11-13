@@ -73,7 +73,8 @@ public class TaskService {
 
     @Transactional
     public void deleteTask(DeleteTaskRequest request) {
-        taskRepository.delete(request.label);
+        Task task = taskRepository.findByLabel(request.label);
+        taskRepository.delete(task);
     }
 
 //    @Transactional
