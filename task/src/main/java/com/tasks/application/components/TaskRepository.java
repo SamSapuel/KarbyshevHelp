@@ -13,7 +13,5 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     public Optional<List<Task>> findAllByTag(String tag);
 
-    public List<Task> findAll();
-
     void delete(String label);
 }
