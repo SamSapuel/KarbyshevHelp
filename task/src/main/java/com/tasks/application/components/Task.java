@@ -18,6 +18,8 @@ public class Task {
     private String id;
 
     private String label;
+
+    private String tag;
     private String createdBy;
     private String assignedTo;
     private boolean isCompleted;
@@ -25,12 +27,21 @@ public class Task {
     private LocalDateTime completedAt;
 
     public Task(String label,
-                String createdBy) {
+                String createdBy,
+                String assignedTo,
+                String tag) {
         this.label = label;
+        this.tag = tag;
         this.createdBy = createdBy;
-        this.assignedTo = null;
+        this.assignedTo = assignedTo;
         this.isCompleted = false;
         this.createdAt = LocalDateTime.now();
         this.completedAt = null;
+    }
+
+    public Task(String label,
+                String createdBy,
+                String assignedTo) {
+        this(label, createdBy, assignedTo, null);
     }
 }

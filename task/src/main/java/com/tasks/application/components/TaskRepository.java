@@ -11,5 +11,7 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     public Optional<List<Task>> findByAssignedTo(String assignedTo);
 
+    public Optional<List<Task>> findAllByTag(String tag);
+
 
 }
