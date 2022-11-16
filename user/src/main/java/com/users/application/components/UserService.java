@@ -19,9 +19,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+    public List<User> getAllUsers() {return userRepository.findAll();}
     @Transactional
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElse(null);

@@ -25,9 +25,7 @@ public class UserController {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @GetMapping
-    public List<User> fetchAllUsers() {
-        return userService.getAllUsers();
-    }
+    public List<User> fetchAllUsers() {return userService.getAllUsers();}
 
     @GetMapping("/findUser/{email}")
     public User getUserByEmail(@PathVariable String email) {
