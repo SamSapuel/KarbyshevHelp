@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("api/v1/users")
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
     private KafkaTemplate<String, String> kafkaTemplate;

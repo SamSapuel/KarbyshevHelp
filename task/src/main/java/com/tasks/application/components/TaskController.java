@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/tasks")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class TaskController {
 
     private final TaskService taskService;
